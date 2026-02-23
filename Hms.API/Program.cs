@@ -7,12 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationDI();
 builder.Services.AddInfrastructureDI(builder.Configuration);
 //cors
+var clientUrl = builder.Configuration["Client:BaseUrl"];
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReact",
+    options.AddPolicy("AllowClient",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") // React URL
+            policy.WithOrigins(clientUrl!) // Client URL
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -33,7 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowReact");
+app.UseCors("AllowClient");
+
 
 app.UseAuthorization();
 
