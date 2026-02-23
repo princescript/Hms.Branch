@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Hms.Domain.Entities
 {
 
-    [Table("Branch")]
     public class Branch
     {
-        [Key]
         public int BranchID { get; set; }
 
         public string? BranchName { get; set; }
