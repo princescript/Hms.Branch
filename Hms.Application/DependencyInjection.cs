@@ -10,6 +10,8 @@ namespace Hms.Application
         public static IServiceCollection AddApplicationDI(this IServiceCollection services)
         {
             services.AddScoped<IBranchServices, BranchServices>();
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
             return services;
         }
     }

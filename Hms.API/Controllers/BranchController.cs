@@ -2,10 +2,13 @@
 using Hms.Application.Interfaces;
 using Hms.Domain.Common;
 using Hms.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hms.API.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BranchController : ControllerBase

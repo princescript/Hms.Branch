@@ -13,6 +13,7 @@ namespace Hms.Infrastructure
         {
             services.AddDbContext<HmsDbContext>(items => items.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IBranchRepository, BranchRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
             return services;
         }
     }

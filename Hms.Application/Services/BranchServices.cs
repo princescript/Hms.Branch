@@ -2,7 +2,7 @@
 using Hms.Application.Interfaces;
 using Hms.Domain.Entities;
 using Hms.Domain.Interfaces;
-using System.Numerics;
+
 
 
 namespace Hms.Application.Services
@@ -55,7 +55,7 @@ namespace Hms.Application.Services
 
         public async Task<BranchDto?> UpdateAsync(BranchDto dto)
         {
-            if(dto.BranchID <=0) return null;
+            if (dto.BranchID <= 0) return null;
             var branch = await _repository.GetByIdAsync(dto.BranchID);
             if (branch == null) return null;
 

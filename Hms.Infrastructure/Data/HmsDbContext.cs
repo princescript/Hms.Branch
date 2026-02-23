@@ -9,7 +9,7 @@ namespace Hms.Infrastructure.Data
             : base(options) { }
 
         public DbSet<Branch> DbBranch { get; set; }
-
+        public DbSet<Users> DbUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Branch>(entity =>
@@ -27,6 +27,26 @@ namespace Hms.Infrastructure.Data
                 entity.Property(e=>e.BranchAddress)
                 .HasMaxLength(250).IsRequired();
                 
+            });
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.ToTable("Users");
+                entity.HasKey(e=>e.Id);
+                entity.Property(e => e.FullName)
+                .HasMaxLength(150).IsRequired();
+
+                entity.Property(e => e.Email)
+                .HasMaxLength(150).IsRequired();
+
+                entity.Property(e => e.PasswordHash)
+                .HasMaxLength(500).IsRequired();
+
+                entity.Property(e => e.Role).
+                HasMaxLength(50).IsRequired().HasDefaultValue("User");
+
+                entity.Property(e=>e.CreatedAtUtc)
+                .HasColumnType("datetime2").HasDefaultValueSql("SYSUTCDATETIME()");
+
             });
             base.OnModelCreating(modelBuilder);
         }
