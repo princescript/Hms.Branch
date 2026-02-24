@@ -16,6 +16,25 @@ namespace Hms.Application.Services
         }
         public async Task<AuthResponseDto> RegisterAsync(RegisterDto dto)
         {
+            if (dto == null)
+            {
+                return new AuthResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid request."
+                };
+            }
+            if (string.IsNullOrWhiteSpace(dto.FullName) ||
+                    string.IsNullOrWhiteSpace(dto.Email) ||
+                    string.IsNullOrWhiteSpace(dto.Password))
+            {
+                return new AuthResponseDto
+                {
+                    Success = false,
+                    Message = "Please provide credentials."
+                };
+            }
+
             var exists = await _repository.UserEmailExistsAsync(dto.Email);
             if (exists)
             {
@@ -25,6 +44,7 @@ namespace Hms.Application.Services
                     Message = "Email already exists."
                 };
             }
+            
             var newUser = new Users
             {
                 FullName = dto.FullName.Trim(),
@@ -45,6 +65,24 @@ namespace Hms.Application.Services
 
         public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
         {
+            if (dto == null)
+            {
+                return new AuthResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid request."
+                };
+            }
+            if (string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Password))
+            {
+                return new AuthResponseDto
+                {
+                    Success = false,
+                    Message = "Please provide credentials."
+                };
+            }
+
+
             var user = await _repository.GetUserByEmailAsync(dto.Email);
             if (user == null)
             {
